@@ -3,8 +3,8 @@ import hashlib
 import re
 import getpass
 
-url = 'http://ringzer0team.com/challenges/13'
-login_url = 'http://ringzer0team.com/login'
+url = 'https://ringzer0team.com/challenges/13'
+login_url = 'https://ringzer0team.com/login'
 text_regex = '----- BEGIN MESSAGE -----<br />\r\n\t\t(\w+)'
 flag_regex = 'FLAG-\w+'
 wrong_regex = 'Wrong.*!'
@@ -20,7 +20,7 @@ def get_text(username, password):
 
 
 def hash(text):
-    return hashlib.sha512(text).hexdigest()
+    return hashlib.sha512(text.encode("utf-8")).hexdigest()
 
 
 def send_answer(username, password):
@@ -40,9 +40,9 @@ def get_flag(username, password):
         return 'Unknown Error!'
 
 if __name__ == '__main__':
-    username = raw_input('Enter your ringzer0team username: ')
+    username = input('Enter your ringzer0team username: ')
     password = getpass.getpass('Enter your ringzer0team password: ')
     try:
-        print get_flag(username, password)
+        print(get_flag(username, password))
     except (requests.exceptions.RequestException, AttributeError) as e:
-        print 'Connection Error!'
+        print('Connection Error!')
